@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bookmarks.views import add_bookmark, get_bookmarks 
+from bookmarks.views import add_bookmark, get_bookmarks, delete_bookmark
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/add/', add_bookmark),
     path('api/all/', get_bookmarks),
+    # <int:pk> allows Django to extract the dynamic ID number from the URL
+    path('api/delete/<int:pk>/', delete_bookmark, name='delete_bookmark'),
 ]

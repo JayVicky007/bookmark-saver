@@ -54,3 +54,19 @@ def get_bookmarks(request):
     # 3. Send the list back as a clean JSON payload
     return Response(data, status=status.HTTP_200_OK)
 
+
+
+@api_view(['DELETE'])
+def delete_bookmark(request, pk):
+    """
+    Deletes a specific bookmark by its Primary Key (ID).
+    """
+    try:
+        # Find the single bookmark record by its ID
+        bookmark = Bookmark.objects.get(pk=pk)
+        bookmark.delete()  # Remove it from SQLite
+        return Response({'message': 'Bookmark deleted successfully'}, status=status.HTTP_200_OK)
+    except Bookmark.DoesNotExist:
+        # Return a 404 if the ID doesn't exist in the database
+        return Response({'error': 'Bookmark not found'}, status=status.HTTP_404_NOT_FOUND)
+
